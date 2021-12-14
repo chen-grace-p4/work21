@@ -20,7 +20,6 @@ int server_handshake(int *to_client) {
   printf("SERVER RECIEVES MESSAGE FROM CLIENT:\n");
   char message[100];
   read(from_client, message, sizeof(message));
-  message[strlen(message)] = 0;
   printf("read well known pipe\n");
 
   printf("SERVER REMOVES WKP:\n");
@@ -60,12 +59,13 @@ int client_handshake(int *to_server) {
   printf("CLIENT SENDS MESSAGE TO SERVER:\n");
   *to_server = open(WKP, O_WRONLY);
   printf("opened well known pipe\n");
-  write(*to_server, pid, strlen(pid));
+  write(*to_server, pid, strlen(pid)+1);
   printf("sent unique secret pipe message\n");
 
   printf("CLIENT RECIEVES RESPONSE:\n");
   from_server = open(pid, O_RDONLY);
   printf("opened secret pipe\n");
+
   char message[100];
   read(from_server, message, sizeof(message));
   printf("recieved ACK\n");

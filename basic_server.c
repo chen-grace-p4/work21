@@ -1,6 +1,5 @@
 #include "pipe_networking.h"
 
-void revstr(char *str1);
 int main() {
 
   int to_client;
